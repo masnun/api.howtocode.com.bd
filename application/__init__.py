@@ -12,16 +12,14 @@ def home():
 
 @app.route('/contrib/<repo>')
 def contrib(repo):
-    data = memcache.get(repo)
-
-    if data is None:
-        try:
-            url = "https://api.github.com/repos/howtocode-com-bd/%s.howtocode.com.bd/contributors" % repo
-            data = json.loads(urllib2.urlopen(url).read())
-        except Exception, ex:
-            return "Exception: " + ex.message
-
-        memcache.set(repo, data, 3600 * 12)
+    try:
+        url = "https://api.github.com/repos/howtocode-com-bd/%s.howtocode.com.bd/contributors" % repo
+        data = json.loads(urllib2.urlopen(url).read())
+        memcache.set(repo, data)
+    except Exception as ex:
+        data = memcache.get(repo)
+        if data is None:
+            return ""
 
     for id, author in enumerate(data):
         data[id]['badge_login'] = author['login'].replace("-", "--")
