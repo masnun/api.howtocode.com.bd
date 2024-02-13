@@ -1,5 +1,5 @@
 
-# Standard ignores
+Standard ignores
 *.pyc
 *.pyo
 *.DS_Store
@@ -9,5 +9,5 @@
 *.pydevproject
 *.kpf
 
-# Don't store secret keys in version control
+Don't store secret keys in version control
 secret_keys.py
